@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Lintelligent.Analyzers.Basic.CodeFixes/Lintelligent.Analyzers.Basic.CodeFixes.csproj" Id="37feb042-c096-46cc-9241-22cba0b133f3" />
+    <Project Path="src/Lintelligent.Analyzers.Basic.Package/Lintelligent.Analyzers.Basic.Package.csproj" Id="21f86bb0-fea2-498c-b6d4-cded1942bccc" />
+    <Project Path="src/Lintelligent.Analyzers.Basic.Vsix/Lintelligent.Analyzers.Basic.Vsix.csproj" Id="33154c14-b155-4d1f-8185-4429bf965cb8" />
+    <Project Path="src/Lintelligent.Analyzers.Basic/Lintelligent.Analyzers.Basic.csproj" Id="e09245d7-8dea-4c89-819c-30c83d18c860" />
+    <Project Path="src/Lintelligent.Core/Lintelligent.Core.csproj" Id="b691a91f-5ee9-492d-ad61-b862001a1169" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Lintelligent.Analyzers.Basic.Test/Lintelligent.Analyzers.Basic.Test.csproj" Id="e14d7663-9528-4076-a775-3aa212243337" />
+    <Project Path="tests/Lintelligent.Core.Test/Lintelligent.Core.Test.csproj" Id="9b535a8c-6fa7-4710-8557-e917ff89d7c3" />
+  </Folder>
+</Solution>
