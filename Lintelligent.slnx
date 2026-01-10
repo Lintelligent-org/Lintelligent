@@ -1,4 +1,14 @@
 <Solution>
+  <Folder Name="/docs/">
+    <File Path="docs/architecture.md" />
+    <File Path="docs/contributing.md" />
+    <File Path="docs/roadmap.md" />
+  </Folder>
+  <Folder Name="/solutionFiles/">
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Lintelligent.Analyzers.Basic.CodeFixes/Lintelligent.Analyzers.Basic.CodeFixes.csproj" Id="37feb042-c096-46cc-9241-22cba0b133f3" />
     <Project Path="src/Lintelligent.Analyzers.Basic.Package/Lintelligent.Analyzers.Basic.Package.csproj" Id="21f86bb0-fea2-498c-b6d4-cded1942bccc" />
