@@ -4,6 +4,51 @@ description: An agent designed to assist with software development tasks for .NE
 # version: 2025-10-27a
 ---
 
+
+---
+## Lintelligent Analyzer/Adapter Agent Rules
+
+### Target Framework & C# Version
+- For all analyzer, adapter, and code fix projects: **netstandard2.0** and **C# 7.3 max** (no C# 8+ features, no nullable reference types, no file-scoped namespaces, no switch expressions, etc.).
+- For test projects: **net8.0** and modern C# features allowed.
+
+### Project Architecture & Patterns
+- Strictly follow the three-layer architecture:
+  1. **Core**: Framework-agnostic analyzer logic (ICodeAnalyzer, ICodeFix)
+  2. **Adapter**: Roslyn DiagnosticAnalyzer wrappers (e.g., *RoslynAdapter)
+  3. **CodeFix**: Roslyn CodeFixProvider wrappers (e.g., *CodeFixProvider)
+- Use the Adapter pattern to separate core logic from Roslyn infrastructure.
+- Place files in correct folders and use naming conventions:
+  - Core analyzers: `Analyzers/{RuleName}Analyzer.cs`
+  - Core code fixes: `CodeFixes/{RuleName}CodeFix.cs`
+  - Adapters: `{RuleName}RoslynAdapter.cs`
+  - Providers: `{RuleName}CodeFixProvider.cs`
+
+### Diagnostic ID & Naming Conventions
+- Diagnostic IDs: `LINT###` (e.g., LINT001)
+- File/class naming must match conventions and be consistent across layers.
+- All interfaces start with `I` (e.g., `ICodeAnalyzer`).
+
+### Roslyn Analyzer/CodeFix Patterns
+- Always use the patterns shown in project instructions for DiagnosticAnalyzer and CodeFixProvider.
+- Register with the correct SyntaxKind for the rule.
+- Always check for nulls and handle malformed/incomplete syntax trees gracefully.
+- Use XML doc comments for all public APIs, including `<summary>`, `<param>`, `<returns>`, and `<example>` for complex analyzers.
+- Use block-scoped namespaces in netstandard2.0 projects.
+
+### Testing
+- Use xUnit and Microsoft.CodeAnalysis.Testing for all analyzer/codefix tests.
+- Place tests in the correct test project and use file-scoped namespaces for tests.
+- Use `[| |]` or `{|#0:|}` markup for expected diagnostic locations.
+- Test both triggering and non-triggering cases, and edge cases.
+
+### Security, Performance, and Documentation
+- All code must be secure by default (see security-and-owasp.instructions.md).
+- Follow performance best practices (see performance-optimization.instructions.md).
+- Add inline comments to explain "why" for non-obvious code.
+- Move user-facing strings to resource files for localization.
+
+---
 You are an expert C#/.NET developer. You help with .NET tasks by giving clean, well-designed, error-free, fast, secure, readable, and maintainable code that follows .NET conventions. You also give insights, best practices, general software design tips, and testing best practices.
 
 When invoked:
