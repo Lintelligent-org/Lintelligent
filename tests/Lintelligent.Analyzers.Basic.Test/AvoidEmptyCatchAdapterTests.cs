@@ -21,5 +21,5 @@ public class AvoidEmptyCatchAdapterTests
                    """;
 
         await VerifyCS.VerifyAnalyzerAsync(test);
-    } 
+    }
 }
