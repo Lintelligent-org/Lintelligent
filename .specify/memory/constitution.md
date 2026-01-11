@@ -1,50 +1,135 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT (Constitution v1.0.0)
+========================================
+Version Change: INITIAL → 1.0.0
+Ratification Date: 2026-01-11
+Last Amendment: 2026-01-11
+
+Modified Principles: N/A (Initial creation)
+Added Sections:
+  - Core Principles (5 principles)
+  - Quality Gates
+  - Development Workflow
+  - Governance
+
+Templates Status:
+  ✅ plan-template.md - Aligned (Constitution Check section references this file)
+  ✅ spec-template.md - Aligned (User stories support independent testing)
+  ✅ tasks-template.md - Aligned (Phase structure supports layered development)
+  ⚠️  checklist-template.md - Generic template, no specific alignment needed
+  ⚠️  agent-file-template.md - No agent-specific references found
+
+Follow-up TODOs:
+  - None identified
+
+Principles Rationale:
+  1. Layered Architecture - Reflects the Core/Adapter/CodeFix separation
+  2. Test-First Development - Aligns with TDD mandate in contributing guide
+  3. Semantic Versioning - Codifies existing VERSIONING.md practices
+  4. Framework Agnostic Core - Critical for architecture integrity
+  5. Public API Stability - Supports long-term ecosystem trust
+-->
+
+# Lintelligent Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Layered Architecture (NON-NEGOTIABLE)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All analyzer and code fix implementations MUST follow the three-layer design:
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+1. **Core Layer** (`Lintelligent.Core`): Framework-agnostic business logic implementing `ICodeAnalyzer` and `ICodeFix` interfaces. MUST NOT depend on Roslyn infrastructure, IDE APIs, IO, networking, or licensing.
+2. **Adapter Layer** (`Lintelligent.Analyzers.Basic`): Roslyn `DiagnosticAnalyzer` adapters that wrap Core analyzers and bridge to Roslyn infrastructure.
+3. **CodeFix Layer** (`Lintelligent.Analyzers.Basic.CodeFixes`): Roslyn `CodeFixProvider` adapters that wrap Core code fixes.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: This separation ensures testability without Roslyn dependencies, enables future platform portability, and maintains clear boundaries between business logic and integration concerns.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+**Validation**: Every new analyzer MUST have a corresponding Core implementation, Roslyn adapter, and independent unit tests for the Core logic.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### II. Test-First Development (NON-NEGOTIABLE)
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+All features and bug fixes MUST follow Test-Driven Development (TDD):
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+1. Write failing tests first (Red)
+2. Implement minimum code to pass tests (Green)
+3. Refactor while keeping tests passing (Refactor)
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**Rationale**: TDD ensures code correctness, prevents regressions, and documents expected behavior. For analyzers, tests define diagnostic expectations before implementation.
+
+**Validation**: Pull requests MUST include test evidence showing the Red-Green-Refactor cycle. Tests MUST use xUnit and Microsoft.CodeAnalysis.Testing framework with `[| |]` markup for diagnostic locations.
+
+### III. Semantic Versioning (STRICTLY ENFORCED)
+
+All releases MUST follow [Semantic Versioning 2.0.0](https://semver.org/):
+
+- **MAJOR (X.0.0)**: Breaking changes to public API, analyzer behavior, or diagnostic IDs
+- **MINOR (0.X.0)**: New analyzers, code fixes, or backward-compatible features
+- **PATCH (0.0.X)**: Bug fixes, performance improvements, documentation updates
+
+**Rationale**: Predictable versioning builds ecosystem trust and prevents breaking changes for consumers.
+
+**Validation**: Version bumps MUST be justified in pull request descriptions with explicit categorization (MAJOR/MINOR/PATCH). Breaking changes require deprecation warnings for at least one MINOR version before removal.
+
+### IV. Framework-Agnostic Core (NON-NEGOTIABLE)
+
+`Lintelligent.Core` MUST remain independent of:
+
+- Roslyn analyzer infrastructure (`DiagnosticAnalyzer`, `CodeFixProvider`)
+- IDE-specific APIs (Visual Studio, VS Code, Rider)
+- File system IO, networking, telemetry, or licensing
+- Commercial or host-specific logic
+
+**Rationale**: Core purity enables independent testing, CLI reuse, and future commercial expansion without architectural rewrites.
+
+**Validation**: Code reviews MUST reject any Core dependencies on prohibited libraries. All Core tests MUST run without Roslyn infrastructure initialization.
+
+### V. Public API Stability
+
+Once a public API surface is released in a stable version (≥1.0.0):
+
+- Public interfaces, classes, and methods are IMMUTABLE unless marked obsolete
+- New members MAY be added (MINOR version bump)
+- Obsolete members MUST remain functional for at least one MINOR version
+- Breaking changes require MAJOR version bump and migration guide
+
+**Rationale**: API stability is critical for ecosystem trust, NuGet package adoption, and long-term project credibility.
+
+**Validation**: Public API changes MUST be reviewed by maintainers. Deprecation warnings MUST include alternative API recommendations and removal timeline.
+
+## Quality Gates
+
+All code MUST pass these gates before merging:
+
+1. **Build**: Solution builds without errors on .NET SDK 8.0+
+2. **Tests**: All unit and integration tests pass
+3. **Coverage**: New code MUST have ≥80% test coverage
+4. **Conventions**: Diagnostic IDs follow `LINT###` format; file naming follows project conventions
+5. **Documentation**: Public APIs have XML documentation; non-obvious logic has inline comments
+6. **Security**: Code follows OWASP best practices (see `.github/instructions/security-and-owasp.instructions.md`)
+
+## Development Workflow
+
+1. **Branch Naming**: `feature/###-description`, `bugfix/###-description`, `docs/###-description`
+2. **Commits**: Use imperative mood (e.g., "Add empty catch analyzer"). Reference issues (`Fixes #42`)
+3. **Pull Requests**:
+   - Include clear description linking to issues/specs
+   - Show test evidence (before/after)
+   - Address all CI/CD checks and review feedback
+4. **Code Review**: All code requires approval from at least one maintainer focusing on correctness, security, clarity, and architecture alignment
+5. **Merging**: Squash or rebase to maintain clean history
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+**Authority**: This constitution supersedes all other development practices, guidelines, and conventions. In case of conflict, this document prevails.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Amendments**: Changes to this constitution require:
+1. Documented rationale and impact analysis
+2. Approval from project maintainers
+3. Version bump following semantic versioning rules
+4. Sync across dependent artifacts (templates, docs, copilot-instructions.md)
+
+**Compliance**: All pull requests and code reviews MUST verify adherence to these principles. Violations MUST be documented and justified before merging, or rejected outright for NON-NEGOTIABLE principles.
+
+**Runtime Guidance**: For AI-assisted development, see `.github/copilot-instructions.md` for detailed architectural context and coding patterns.
+
+**Version**: 1.0.0 | **Ratified**: 2026-01-11 | **Last Amended**: 2026-01-11
