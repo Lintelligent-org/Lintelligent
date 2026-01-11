@@ -41,7 +41,7 @@ namespace Lintelligent.Core.Analyzers
                 .Concat(root.DescendantNodes().OfType<SwitchStatementSyntax>()))
             {
                 // Count nesting depth, ignoring else-if chains
-                int depth = 1;
+                var depth = 1;
                 var current = conditional.Parent;
                 while (current != null)
                 {
