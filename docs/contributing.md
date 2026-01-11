@@ -3,16 +3,18 @@
 Thank you for your interest in contributing to **Lintelligent**! We welcome all contributions—code, documentation, tests, and ideas. Please read these guidelines to help us maintain a high-quality, secure, and collaborative project.
 
 ## Table of Contents
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [How to Contribute](#how-to-contribute)
-- [Coding Standards](#coding-standards)
-- [Commit Messages](#commit-messages)
-- [Testing](#testing)
-- [Pull Request Process](#pull-request-process)
-- [Code Review](#code-review)
-- [Troubleshooting](#troubleshooting)
-- [Resources](#resources)
+- [Contributing to Lintelligent](#contributing-to-lintelligent)
+	- [Table of Contents](#table-of-contents)
+	- [Code of Conduct](#code-of-conduct)
+	- [Getting Started](#getting-started)
+	- [How to Contribute](#how-to-contribute)
+	- [Coding Standards](#coding-standards)
+	- [Commit Messages](#commit-messages)
+	- [Testing](#testing)
+	- [Pull Request Process](#pull-request-process)
+	- [Code Review](#code-review)
+	- [Troubleshooting](#troubleshooting)
+	- [Resources](#resources)
 
 ## Code of Conduct
 
