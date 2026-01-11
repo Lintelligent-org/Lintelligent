@@ -4,11 +4,19 @@
 
 ---
 
+
 ## Overview
 
 Lintelligent is a layered, open-source framework for building custom Roslyn analyzers and code fixes. It separates core analysis logic from Roslyn infrastructure, making analyzers easier to test, maintain, and extend. Whether you're enforcing code standards, preventing bugs, or automating refactorings, Lintelligent provides a robust foundation for static analysis in .NET projects.
 
+**Current Status:**
+- Foundation and Core Engine phases complete (see [ROADMAP](docs/roadmap.md) or [ROADMAP](ROADMAP.md) for details)
+- 2 analyzers implemented (`LINT001` Avoid Empty Catch, `LINT002` Complex Conditional)
+- 10–15 analyzers planned for the first full release
+- Public API, architecture, contributing, and versioning docs available at the repo root
+
 ---
+
 
 ## Features
 
@@ -17,6 +25,7 @@ Lintelligent is a layered, open-source framework for building custom Roslyn anal
 - **Extensible:** Add new rules, code fixes, and adapters with minimal boilerplate
 - **NuGet packaging:** Ready for CI/CD and integration into your projects
 - **Modern .NET support:** Analyzer core targets netstandard2.0 for broad compatibility; tests use .NET 8
+- **Comprehensive documentation:** See [ARCHITECTURE.md](ARCHITECTURE.md), [CONTRIBUTING.md](CONTRIBUTING.md), [VERSIONING.md](VERSIONING.md), and [API.md](API.md)
 
 ---
 
@@ -63,7 +72,7 @@ dotnet test
 3. (Optional) Add a code fix in `src/Lintelligent.Core/CodeFixes/` and its provider in `src/Lintelligent.Analyzers.Basic.CodeFixes/`.
 4. Add tests in `tests/Lintelligent.Analyzers.Basic.Test/`.
 
-See [docs/architecture.md](docs/architecture.md) for detailed patterns and examples.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed patterns and examples.
 
 ---
 
@@ -82,14 +91,18 @@ catch { /* [| |] triggers diagnostic here */ }
 
 ```
 src/
-  Lintelligent.Core/                # Core analyzer logic (netstandard2.0)
-  Lintelligent.Analyzers.Basic/      # Roslyn adapters
-  Lintelligent.Analyzers.Basic.CodeFixes/ # Code fix providers
-  Lintelligent.Analyzers.Basic.Package/   # NuGet packaging
+	Lintelligent.Core/                    # Core analyzer logic (netstandard2.0)
+	Lintelligent.Analyzers.Basic/         # Roslyn adapters
+	Lintelligent.Analyzers.Basic.CodeFixes/ # Code fix providers
+	Lintelligent.Analyzers.Basic.Package/ # NuGet packaging
 tests/
-  Lintelligent.Analyzers.Basic.Test/ # Analyzer and code fix tests (.NET 8)
-  Lintelligent.Core.Test/            # Core logic tests
-docs/                                # Architecture, contributing, roadmap
+	Lintelligent.Analyzers.Basic.Test/    # Analyzer and code fix tests (.NET 8)
+	Lintelligent.Core.Test/               # Core logic tests
+docs/                                   # Architecture, contributing, roadmap
+ARCHITECTURE.md                         # Root-level architecture doc
+CONTRIBUTING.md                         # Root-level contributing guide
+VERSIONING.md                           # Versioning and release strategy
+API.md                                  # Core API documentation
 ```
 
 ---
@@ -103,10 +116,13 @@ docs/                                # Architecture, contributing, roadmap
 
 ---
 
+
 ## Resources
 
-- [Architecture Guide](docs/architecture.md)
-- [How to Contribute](docs/contributing.md)
+- [Architecture Guide](ARCHITECTURE.md)
+- [How to Contribute](CONTRIBUTING.md)
+- [Versioning](VERSIONING.md)
+- [API Reference](API.md)
 - [Roadmap](docs/roadmap.md)
 
 ---
