@@ -62,10 +62,14 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: actions/dependency-review-action@v4
 
-      - name: Run CodeQL Analysis
+      - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: csharp
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
 
