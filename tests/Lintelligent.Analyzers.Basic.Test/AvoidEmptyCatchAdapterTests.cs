@@ -15,7 +15,7 @@ public class AvoidEmptyCatchAdapterTests
                        void Test()
                        {
                            try { } 
-                           catch { [| |] }
+                           [|catch|] { }
                        }
                    }
                    """;

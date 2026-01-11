@@ -40,7 +40,8 @@ public class AvoidEmptyCatchProvider : CodeFixProvider
         context.RegisterCodeFix(
             Microsoft.CodeAnalysis.CodeActions.CodeAction.Create(
                 "Add TODO comment to catch",
-                ct => ApplyCoreFix(context.Document, codeFix, diagnostic.ToDiagnosticResult(), ct)),
+                ct => ApplyCoreFix(context.Document, codeFix, diagnostic.ToDiagnosticResult(), ct),
+                equivalenceKey: nameof(AvoidEmptyCatchProvider)),
             diagnostic);
     }
 

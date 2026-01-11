@@ -23,9 +23,11 @@ namespace Lintelligent.Core.CodeFixes
             if (catchNode == null) return new CodeFixResult(tree);
 
             // Insert a comment inside the empty catch block
+            var comment = SyntaxFactory.Comment("// TODO: handle exception");
+            var emptyStatement = SyntaxFactory.EmptyStatement()
+                .WithLeadingTrivia(SyntaxFactory.TriviaList(comment, SyntaxFactory.CarriageReturnLineFeed));
             var newBlock = catchNode.Block.WithStatements(
-                SyntaxFactory.SingletonList(
-                    SyntaxFactory.ParseStatement("// TODO: handle exception\n")));
+                SyntaxFactory.SingletonList<StatementSyntax>(emptyStatement));
 
             var newCatch = catchNode.WithBlock(newBlock);
             var newRoot = root.ReplaceNode(catchNode, newCatch);
