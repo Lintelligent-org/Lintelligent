@@ -19,7 +19,9 @@ namespace Lintelligent.Analyzers.Basic
             "Conditional nesting depth is too high",
             "Lintelligent",
             DiagnosticSeverity.Warning,
-            isEnabledByDefault: true);
+            isEnabledByDefault: true,
+            description: "Flags overly complex conditional expressions that reduce readability and increase maintenance risk.",
+            helpLinkUri: "https://github.com/Lintelligent-org/Lintelligent/blob/main/docs/analyzers/LINT002.md");
 
         private readonly ICodeAnalyzer _analyzer = new ComplexConditionalAnalyzer();
 

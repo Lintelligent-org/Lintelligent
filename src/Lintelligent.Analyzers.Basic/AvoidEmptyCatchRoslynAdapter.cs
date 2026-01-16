@@ -11,8 +11,14 @@ namespace Lintelligent.Analyzers.Basic
     public class AvoidEmptyCatchRoslynAdapter : DiagnosticAnalyzer
     {
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
-            "LINT001", "Avoid empty catch blocks", "Avoid empty catch blocks",
-            "Lintelligent", DiagnosticSeverity.Warning, isEnabledByDefault: true);
+            "LINT001",
+            "Avoid empty catch blocks",
+            "Avoid empty catch blocks",
+            "Lintelligent",
+            DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: "Detects empty catch blocks that swallow exceptions without handling or logging.",
+            helpLinkUri: "https://github.com/Lintelligent-org/Lintelligent/blob/main/docs/analyzers/LINT001.md");
 
         private readonly ICodeAnalyzer _analyzer = new AvoidEmptyCatchAnalyzer();
 

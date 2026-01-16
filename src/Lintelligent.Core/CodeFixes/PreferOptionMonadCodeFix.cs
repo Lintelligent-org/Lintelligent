@@ -396,13 +396,55 @@ public sealed class PreferOptionMonadCodeFix : ICodeFix
     {
         var transformedArms = switchExpr.Arms.Select(arm =>
         {
-            var transformedExpression = TransformExpression(arm.Expression, innerType);
+            var originalExpression = arm.Expression;
+            var transformedExpression = TransformExpressionForSwitchArm(originalExpression, innerType);
+            
+            // Preserve the trailing trivia from the original expression on the new expression
+            // (but not within the argument to Some() to avoid breaking formatting)
+            if (originalExpression.GetTrailingTrivia().Any())
+            {
+                transformedExpression = transformedExpression.WithTrailingTrivia(
+                    originalExpression.GetTrailingTrivia());
+            }
+            
             return arm.WithExpression(transformedExpression);
         }).ToArray();
         
         return switchExpr.WithArms(
             SyntaxFactory.SeparatedList(transformedArms)
         );
+    }
+
+    /// <summary>
+    /// Transforms an expression in a switch arm, avoiding trivia issues
+    /// </summary>
+    /// <param name="expression">The expression to transform</param>
+    /// <param name="innerType">The inner type T for Option&lt;T&gt;</param>
+    /// <returns>The transformed expression without inheriting argument trivia</returns>
+    private static ExpressionSyntax TransformExpressionForSwitchArm(ExpressionSyntax expression, TypeSyntax innerType)
+    {
+        // Handle null literal
+        if (expression is LiteralExpressionSyntax literal &&
+            literal.IsKind(SyntaxKind.NullLiteralExpression))
+        {
+            return CreateOptionNoneExpression(innerType);
+        }
+        
+        // Handle default literal → Option<T>.None
+        if (expression is LiteralExpressionSyntax defaultLiteral &&
+            defaultLiteral.IsKind(SyntaxKind.DefaultLiteralExpression))
+        {
+            return CreateOptionNoneExpression(innerType);
+        }
+        
+        // Handle default(T?) → Option<T>.None
+        if (expression is DefaultExpressionSyntax)
+        {
+            return CreateOptionNoneExpression(innerType);
+        }
+        
+        // Wrap values in Option.Some() but strip trivia from the argument
+        return CreateOptionSomeExpression(innerType, expression.WithoutTrivia());
     }
 
     /// <summary>

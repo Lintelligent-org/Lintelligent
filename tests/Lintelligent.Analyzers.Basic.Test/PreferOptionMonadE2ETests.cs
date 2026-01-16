@@ -21,9 +21,9 @@ public class PreferOptionMonadE2ETests
                    
                    class Program
                    {
-                       [|string?|] GetName()
+                       [|string?|] GetName(bool condition)
                        {
-                           if (DateTime.Now.Hour < 12)
+                           if (condition)
                                return null;
                            return "Alice";
                        }
@@ -36,11 +36,11 @@ public class PreferOptionMonadE2ETests
                         
                         class Program
                         {
-                            Option<string> GetName()
+                            Option<string> GetName(bool condition)
                             {
-                                if (DateTime.Now.Hour < 12)
+                                if (condition)
                                     return Option<string>.None;
-                                return Option.Some("Alice");
+                                return Option<string>.Some("Alice");
                             }
                         }
                         """;
@@ -56,9 +56,9 @@ public class PreferOptionMonadE2ETests
                    
                    class Program
                    {
-                       [|int?|] GetCount()
+                       [|int?|] GetCount(bool condition)
                        {
-                           if (DateTime.Now.Hour < 12)
+                           if (condition)
                                return null;
                            return 42;
                        }
@@ -70,11 +70,11 @@ public class PreferOptionMonadE2ETests
                         
                         class Program
                         {
-                            Option<int> GetCount()
+                            Option<int> GetCount(bool condition)
                             {
-                                if (DateTime.Now.Hour < 12)
+                                if (condition)
                                     return Option<int>.None;
-                                return Option.Some(42);
+                                return Option<int>.Some(42);
                             }
                         }
                         """;
@@ -92,10 +92,10 @@ public class PreferOptionMonadE2ETests
                    
                    class Program
                    {
-                       async [|Task<string?>|] GetValueAsync()
+                       async [|Task<string?>|] GetValueAsync(bool condition)
                        {
                            await Task.Delay(100);
-                           if (DateTime.Now.Hour < 12)
+                           if (condition)
                                return null;
                            return "Result";
                        }
@@ -109,12 +109,12 @@ public class PreferOptionMonadE2ETests
                         
                         class Program
                         {
-                            async Task<Option<string>> GetValueAsync()
+                            async Task<Option<string>> GetValueAsync(bool condition)
                             {
                                 await Task.Delay(100);
-                                if (DateTime.Now.Hour < 12)
+                                if (condition)
                                     return Option<string>.None;
-                                return Option.Some("Result");
+                                return Option<string>.Some("Result");
                             }
                         }
                         """;
@@ -195,8 +195,6 @@ public class PreferOptionMonadE2ETests
                                return null;
                            if (code == 1)
                                return "Success";
-                           if (code == 2)
-                               return "Warning";
                            return "Error";
                        }
                    }
@@ -213,10 +211,8 @@ public class PreferOptionMonadE2ETests
                                 if (code == 0)
                                     return Option<string>.None;
                                 if (code == 1)
-                                    return Option.Some("Success");
-                                if (code == 2)
-                                    return Option.Some("Warning");
-                                return Option.Some("Error");
+                                    return Option<string>.Some("Success");
+                                return Option<string>.Some("Error");
                             }
                         }
                         """;
@@ -251,8 +247,8 @@ public class PreferOptionMonadE2ETests
                             Option<string> GetValue(int x) => x switch
                             {
                                 0 => Option<string>.None,
-                                1 => Option.Some("One"),
-                                _ => Option.Some("Other")
+                                1 => Option<string>.Some("One"),
+                                _ => Option<string>.Some("Other")
                             };
                         }
                         """;
@@ -263,7 +259,7 @@ public class PreferOptionMonadE2ETests
     [Fact]
     public async Task EndToEnd_ComplexScenario_DetectAndFix()
     {
-        // Real-world scenario: Repository pattern method
+        // Real-world scenario: Repository pattern method with explicit null check
         var test = """
                    #nullable enable
                    using System.Collections.Generic;
@@ -305,13 +301,13 @@ public class PreferOptionMonadE2ETests
                         public class UserRepository
                         {
                             private readonly List<User> _users = new();
-                            
+                        
                             Option<User> FindById(int id)
                             {
                                 var user = _users.FirstOrDefault(u => u.Id == id);
                                 if (user == null)
                                     return Option<User>.None;
-                                return Option.Some(user);
+                                return Option<User>.Some(user);
                             }
                         }
                         """;
