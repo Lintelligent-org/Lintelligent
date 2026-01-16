@@ -9,17 +9,17 @@
 
   <PropertyGroup>
     <PackageId>Lintelligent.Analyzers.Basic</PackageId>
-    <PackageVersion>1.0.0.0</PackageVersion>
-    <Authors>alexa</Authors>
-    <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
-    <PackageProjectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</PackageProjectUrl>
-    <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
-    <RepositoryUrl>http://REPOSITORY_URL_HERE_OR_DELETE_THIS_LINE</RepositoryUrl>
+    <PackageVersion>0.2.0</PackageVersion>
+    <Authors>Lintelligent Contributors</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Lintelligent-org/Lintelligent</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Lintelligent-org/Lintelligent</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>Lintelligent.Analyzers.Basic</Description>
-    <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
-    <Copyright>Copyright</Copyright>
-    <PackageTags>Lintelligent.Analyzers.Basic, analyzers</PackageTags>
+    <Description>Roslyn analyzer package providing code quality and maintainability rules for C# projects. Includes LINT001 (Avoid Empty Catch), LINT002 (Complex Conditionals), and LINT003 (Prefer Option Monad).</Description>
+    <PackageReleaseNotes>v0.2.0: Added LINT003 PreferOptionMonad analyzer with code fix to transform nullable types to Option&lt;T&gt; pattern. Improved code fix quality with comprehensive XML documentation.</PackageReleaseNotes>
+    <Copyright>Copyright © 2026 Lintelligent Contributors</Copyright>
+    <PackageTags>roslyn;analyzer;code-quality;code-fix;csharp;dotnet;static-analysis</PackageTags>
     <DevelopmentDependency>true</DevelopmentDependency>
     <NoPackageAnalysis>true</NoPackageAnalysis>
 

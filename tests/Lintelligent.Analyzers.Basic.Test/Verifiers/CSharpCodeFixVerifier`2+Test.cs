@@ -22,6 +22,11 @@ namespace Lintelligent.Analyzers.Basic.Test
 
                     return solution;
                 });
+
+                // Add LanguageExt reference for Option<T> tests
+                ReferenceAssemblies = ReferenceAssemblies.Net.Net80.AddPackages(
+                    System.Collections.Immutable.ImmutableArray.Create(
+                        new Microsoft.CodeAnalysis.Testing.PackageIdentity("LanguageExt.Core", "4.4.9")));
             }
         }
     }

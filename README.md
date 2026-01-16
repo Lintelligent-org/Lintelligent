@@ -10,10 +10,13 @@
 Lintelligent is a layered, open-source framework for building custom Roslyn analyzers and code fixes. It separates core analysis logic from Roslyn infrastructure, making analyzers easier to test, maintain, and extend. Whether you're enforcing code standards, preventing bugs, or automating refactorings, Lintelligent provides a robust foundation for static analysis in .NET projects.
 
 **Current Status:**
-- Foundation and Core Engine phases complete (see [ROADMAP](docs/roadmap.md) or [ROADMAP](ROADMAP.md) for details)
-- 2 analyzers implemented (`LINT001` Avoid Empty Catch, `LINT002` Complex Conditional)
-- 10–15 analyzers planned for the first full release
-- Public API, architecture, contributing, and versioning docs available at the repo root
+- Foundation and Core Engine phases complete (see [ROADMAP](docs/roadmap.md) for details)
+- 3 analyzers implemented with code fixes:
+  - **LINT001** - Avoid Empty Catch blocks
+  - **LINT002** - Complex Conditional expressions
+  - **LINT003** - Prefer Option Monad (nullable → Option<T>)
+- 10–15 analyzers planned for the first full release (v0.5.0)
+- NuGet package available: `Lintelligent.Analyzers.Basic` v0.2.0
 
 ---
 
@@ -76,7 +79,9 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed patterns and examples.
 
 ---
 
-## Example: Avoid Empty Catch Analyzer
+## Analyzers
+
+### LINT001: Avoid Empty Catch
 
 Detects and flags empty `catch` blocks that silently suppress exceptions.
 
@@ -84,6 +89,54 @@ Detects and flags empty `catch` blocks that silently suppress exceptions.
 try { /* ... */ }
 catch { /* [| |] triggers diagnostic here */ }
 ```
+
+**Code Fix:** Adds a TODO comment to remind developers to handle the exception.
+
+---
+
+### LINT002: Complex Conditional
+
+Flags overly complex conditional expressions that reduce readability.
+
+```csharp
+if (a && b || c && (d || e) && !f) { /* complex! */ }
+```
+
+**Suggestion:** Extract complex conditions into well-named methods.
+
+---
+
+### LINT003: Prefer Option Monad
+
+Transforms nullable types to the `Option<T>` monad pattern for safer handling of optional values.
+
+**Before:**
+```csharp
+string? GetUserEmail(int userId)
+{
+    if (userId == 0) return null;
+    return "user@example.com";
+}
+```
+
+**After (with code fix):**
+```csharp
+using LanguageExt;
+
+Option<string> GetUserEmail(int userId)
+{
+    if (userId == 0) return Option<string>.None;
+    return Option<string>.Some("user@example.com");
+}
+```
+
+**Benefits:**
+- Eliminates null reference exceptions
+- Makes the "absence of value" explicit in the type system
+- Forces callers to handle both Some and None cases
+- Enables functional composition with Map, Bind, Match
+
+[Learn more about LINT003](docs/analyzers/LINT003.md)
 
 ---
 

@@ -101,5 +101,38 @@ namespace Lintelligent.Analyzers.Basic
                 return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Prefer Option&lt;T&gt; over nullable types.
+        /// </summary>
+        internal static string PreferOptionMonadTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("PreferOptionMonadTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Method '{0}' returns nullable type '{1}'. Consider using '{2}' to make absence of value explicit..
+        /// </summary>
+        internal static string PreferOptionMonadMessageFormat
+        {
+            get
+            {
+                return ResourceManager.GetString("PreferOptionMonadMessageFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Using Option&lt;T&gt; from language-ext makes the possibility of absence explicit in the type system, reducing null reference exceptions..
+        /// </summary>
+        internal static string PreferOptionMonadDescription
+        {
+            get
+            {
+                return ResourceManager.GetString("PreferOptionMonadDescription", resourceCulture);
+            }
+        }
     }
 }

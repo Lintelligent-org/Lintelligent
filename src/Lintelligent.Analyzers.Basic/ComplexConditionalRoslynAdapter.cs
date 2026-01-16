@@ -14,7 +14,7 @@ namespace Lintelligent.Analyzers.Basic
     public class ComplexConditionalRoslynAdapter : DiagnosticAnalyzer
     {
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
-            "LINT003",
+            "LINT002",
             "Excessive conditional nesting",
             "Conditional nesting depth is too high",
             "Lintelligent",

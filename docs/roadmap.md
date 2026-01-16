@@ -28,10 +28,11 @@
 - ✅ Test infrastructure with xUnit and Microsoft.CodeAnalysis.Testing
 - ⏳ Missing: Comprehensive API documentation
 
-**Phase 2 - Basic Analyzer Pack** (20% complete)
+**Phase 2 - Basic Analyzer Pack** (30% complete)
 - ✅ `LINT001`: Avoid Empty Catch - Detects empty catch blocks (with code fix)
 - ✅ `LINT002`: Complex Conditional - Flags overly complex conditionals
-- ⏳ Target: 10-15 high-quality rules (8-13 remaining)
+- ✅ `LINT003`: Prefer Option Monad - Transform nullable types to Option<T> (with code fix)
+- ⏳ Target: 10-15 high-quality rules (7-12 remaining)
 
 ### 🚧 In Progress
 - Phase 2: Expanding analyzer rule set
@@ -121,9 +122,10 @@
 ### Implemented Rules
 - ✅ `LINT001`: Avoid empty catch blocks (with code fix)
 - ✅ `LINT002`: Complex conditional expressions
+- ✅ `LINT003`: Prefer Option Monad - Transform nullable types to Option<T> pattern (with code fix)
 
 ### Planned Rules
-- [ ] `LINT003`: Avoid swallowed exceptions (catch blocks that log but don't rethrow)
+- [ ] `LINT004`: Avoid swallowed exceptions (catch blocks that log but don't rethrow)
 - [ ] `LINT004`: Avoid overly broad catch clauses (catching `Exception` instead of specific types)
 - [ ] `LINT005`: Dead code detection (unused private members)
 - [ ] `LINT006`: Redundant null checks (after null-coalescing or null-conditional operators)
