@@ -134,8 +134,8 @@
     <comment>The title of the LINT003 diagnostic.</comment>
   </data>
   <data name="PreferOptionMonadMessageFormat" xml:space="preserve">
-    <value>Method '{0}' returns nullable type '{1}'. Consider using '{2}' to make absence of value explicit.</value>
-    <comment>The format-able message the diagnostic displays for LINT003.</comment>
+    <value>Consider using Option&lt;T&gt; instead of nullable types to make absence of value explicit</value>
+    <comment>The message the diagnostic displays for LINT003.</comment>
   </data>
   <data name="PreferOptionMonadDescription" xml:space="preserve">
     <value>Using Option&lt;T&gt; from language-ext makes the possibility of absence explicit in the type system, reducing null reference exceptions.</value>

@@ -3,62 +3,14 @@ using Xunit;
 using VerifyCS = Lintelligent.Analyzers.Basic.Test.CSharpAnalyzerVerifier<
     Lintelligent.Analyzers.Basic.PreferOptionMonadRoslynAdapter>;
 
+namespace Lintelligent.Analyzers.Basic.Test;
+
+/// <summary>
+/// Tests for Roslyn adapter configuration and suppression mechanisms.
+/// Basic detection tests are covered in PreferOptionMonadRegressionTests.
+/// </summary>
 public class PreferOptionMonadAdapterTests
 {
-    [Fact]
-    public async Task DetectsNullableReferenceTypeWithRoslyn()
-    {
-        // Nullable value type test (works without #nullable enable directive)
-        var test = """
-                   class Program
-                   {
-                       [|System.Nullable<int>|] GetValue()
-                       {
-                           return null;
-                       }
-                   }
-                   """;
-
-        await VerifyCS.VerifyAnalyzerAsync(test);
-    }
-
-    [Fact]
-    public async Task DetectsNullableValueTypeWithRoslyn()
-    {
-        var test = """
-                   class Program
-                   {
-                       [|int?|] GetCount()
-                       {
-                           return null;
-                       }
-                   }
-                   """;
-
-        await VerifyCS.VerifyAnalyzerAsync(test);
-    }
-
-    [Fact]
-    public async Task IgnoresNonNullableTypesWithRoslyn()
-    {
-        var test = """
-                   class Program
-                   {
-                       string GetValue()
-                       {
-                           return "test";
-                       }
-                       
-                       int GetCount()
-                       {
-                           return 42;
-                       }
-                   }
-                   """;
-
-        await VerifyCS.VerifyAnalyzerAsync(test);
-    }
-
     [Fact]
     public async Task IgnoresVoidMethodsWithRoslyn()
     {
@@ -74,7 +26,7 @@ public class PreferOptionMonadAdapterTests
         await VerifyCS.VerifyAnalyzerAsync(test);
     }
 
-    // Phase 7: User Story 4 - Configuration and Suppression (T064-T066)
+    // Configuration and Suppression Tests
 
     [Fact]
     public async Task RespectsPragmaWarningDisable()
