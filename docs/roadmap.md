@@ -1,43 +1,81 @@
-# Lintelligent – Public Repository Roadmap
 
-> **Purpose**: Establish Lintelligent as a credible, extensible, Roslyn-native analysis engine that solves real problems, is pleasant to extend, and safe to depend on.
+# Application Roadmap
 
-**The public repository is about trust, quality, and adoption.**
+## Milestones
+- [x] Foundation (Q1 2026)
+- [x] Core Engine (Q1 2026)
+- [ ] Basic Analyzer Pack (Q2 2026)
+- [ ] NuGet Packaging & Distribution (Q2 2026)
+- [ ] Public CLI (Q3 2026)
+- [ ] Documentation & Credibility (Q3 2026)
+- [ ] Extensibility Framework (Q4 2026)
+
+## Features
+| Feature/Rule                  | Status     | Notes/Target                |
+|------------------------------|------------|-----------------------------|
+| LINT001: Avoid Empty Catch    | Existing   | Code fix: Add TODO/logging  |
+| LINT002: Complex Conditionals | Existing   | Code fix: Extract/clarify   |
+| LINT003: Prefer Option Monad  | Existing   | Code fix: Option<T> pattern |
+| LINT004: Avoid Swallowed Exceptions | Planned    | Catch blocks that log but don't rethrow |
+| LINT005: Dead Code Detection  | Planned    | Unused private members      |
+| LINT006: Redundant Null Checks| Planned   | After null-coalescing       |
+| LINT007: Magic Numbers        | Planned    | Hardcoded literals          |
+| LINT008: Long Methods         | Planned    | Complexity thresholds       |
+| LINT009: Deep Nesting         | Planned    | 4+ levels                   |
+| LINT010: Non-descriptive Names| Planned   | Single-letter vars          |
+| Additional Rules              | Planned    | Community feedback-driven   |
+
+## Technical Tasks
+- [ ] Complete analyzer pack (10-15 rules total)
+- [ ] Expand code fix coverage (target: 3-5 rules with fixes)
+- [ ] Formalize root-level ARCHITECTURE.md, CONTRIBUTING.md, VERSIONING.md
+- [ ] Comprehensive API documentation
+- [ ] Improve test coverage (Core, Adapters, CodeFixes)
+- [ ] Performance benchmarking and optimization
+- [ ] Incremental analysis support
+- [ ] Automated NuGet/GitHub Actions publishing
+- [ ] CLI implementation (analyze, JSON output, CI integration)
+- [ ] Plugin/extension API for third-party analyzers
+
+## Dependencies
+- [x] Microsoft.CodeAnalysis (Roslyn)
+- [x] LanguageExt.Core (for Option<T> monad)
+- [ ] .NET 8 (target for future releases)
+- [ ] NuGet.org (distribution)
+- [ ] Community contributors (for rule expansion)
+
+## Timeline
+| Milestone                  | Target Date   |
+|----------------------------|---------------|
+| Foundation                 | 2026-02-15    |
+| Core Engine                | 2026-03-15    |
+| Basic Analyzer Pack        | 2026-06-01    |
+| NuGet Packaging            | 2026-07-01    |
+| Public CLI                 | 2026-08-15    |
+| Documentation & Credibility| 2026-09-15    |
+| Extensibility Framework    | 2026-12-01    |
+
+## Success Metrics
+- 10-15 analyzer rules implemented by Q2 2026
+- 90%+ code coverage for Core analyzers
+- 3-5 code fixes available
+- NuGet package published and >1,000 downloads in first month
+- CLI available and used in CI pipelines
+- 20+ community contributors by end of 2026
+- 500+ GitHub stars by end of 2026
+
+## Risks & Mitigation
+| Risk                        | Impact   | Probability | Mitigation                                    |
+|-----------------------------|----------|-------------|-----------------------------------------------|
+| Roslyn API breaking changes | High     | Medium      | Pin to stable Roslyn, maintain compat layer    |
+| Performance at scale        | High     | Medium      | Benchmarking, incremental analysis            |
+| Low community engagement    | High     | Medium      | High-quality docs, community outreach         |
+| Competing analyzers         | Medium   | High        | Focus on extensibility, unique value          |
+| Documentation lag           | Medium   | High        | Write docs alongside code, use templates      |
 
 ---
 
-## Current State (January 2026)
-
-### ✅ Completed
-
-**Phase 0 - Foundation** (60% complete)
-- ✅ Solution structure finalized (`.slnx` modern solution format)
-- ✅ Roslyn-in-core implemented via adapter pattern
-- ✅ Three-layer architecture established (Core, Adapter, CodeFix)
-- ✅ Analyzer vs CLI responsibility boundaries defined
-- ⏳ Missing: ARCHITECTURE.md (exists as [docs/architecture.md](architecture.md))
-- ⏳ Missing: CONTRIBUTING.md (exists as [docs/contributing.md](contributing.md))
-- ⏳ Missing: VERSIONING.md
-
-**Phase 1 - Core Engine** (90% complete)
-- ✅ Analyzer abstractions finalized (`ICodeAnalyzer`, `ICodeFix`)
-- ✅ Diagnostic model implemented (`DiagnosticResult`, `CodeFixResult`)
-- ✅ Code fix pipeline operational
-- ✅ Framework-agnostic core with zero host knowledge
-- ✅ Base analyzer and code fix classes implemented
-- ✅ Test infrastructure with xUnit and Microsoft.CodeAnalysis.Testing
-- ⏳ Missing: Comprehensive API documentation
-
-**Phase 2 - Basic Analyzer Pack** (30% complete)
-- ✅ `LINT001`: Avoid Empty Catch - Detects empty catch blocks (with code fix)
-- ✅ `LINT002`: Complex Conditional - Flags overly complex conditionals
-- ✅ `LINT003`: Prefer Option Monad - Transform nullable types to Option<T> (with code fix)
-- ⏳ Target: 10-15 high-quality rules (7-12 remaining)
-
-### 🚧 In Progress
-- Phase 2: Expanding analyzer rule set
-- Documentation improvements
-- Test coverage enhancement
+> **Principle:** Lintelligent will always remain free, open-source, and community-driven. All core functionality will be available to everyone.
 
 ### ⏳ Not Started
 - Phase 3: NuGet packaging and distribution
